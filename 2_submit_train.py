@@ -36,11 +36,11 @@ print(ws.location, ":", ws.resource_group)
 # %%
 job = command(
     code="verify_install",  # location of source code
-    command="python tester.py", # script to run
+    command="python tester.py",  # script to run
     environment="mmrotate-azure-env@latest",
     display_name="mmrotate-verify-install",
     resources=JobResourceConfiguration(
-        instance_type="Standard_NC8as_T4_v3", instance_count=1
+        instance_type="Standard_NC4as_T4_v3", instance_count=1
     ),
     queue_settings={"job_tier": "spot"},
 )
