@@ -30,8 +30,8 @@ ml_client = MLClient(
 env_docker_conda = Environment(
     image="mcr.microsoft.com/azureml/curated/acpt-pytorch-2.2-cuda12.1:18",
     conda_file="environment.yml",
-    name="custom-acpt-env",
-    description="Environment created from a Base ACPT Docker image plus Conda environment for FashionMNIST.",
+    name="mmrotate-azure-env",
+    description="Environment created for mmrotate training",
 )
 
 # %%
@@ -41,3 +41,5 @@ ml_client.environments.create_or_update(env_docker_conda)
 envs = ml_client.environments.list()
 for env in envs:
     print(env.name)
+
+# %%
