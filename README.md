@@ -24,3 +24,5 @@ pip install .
 ```bash
 conda env export > environment.yml
 ```
+
+Then add this under pip within environment.yml file: `- --extra-index-url https://download.pytorch.org/whl/cu121`
