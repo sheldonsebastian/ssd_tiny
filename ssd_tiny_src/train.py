@@ -64,7 +64,7 @@ cfg.checkpoint_config.interval = 3
 cfg.seed = 0
 set_random_seed(0, deterministic=False)
 cfg.gpu_ids = range(1)
-cfg.device = "cuda:0"
+cfg.device = "cuda"
 
 # We can also use tensorboard to log the training process
 cfg.log_config.hooks = [dict(type="TextLoggerHook"), dict(type="TensorboardLoggerHook")]
