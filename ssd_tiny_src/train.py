@@ -51,6 +51,8 @@ cfg.load_from = "oriented_rcnn_r50_fpn_1x_dota_le90-6d2b2ce0.pth"
 unique_id = uuid.uuid4()
 cfg.work_dir = f"./outputs_{unique_id}"
 
+print(cfg.work_dir)
+
 cfg.optimizer.lr = 0.001
 cfg.lr_config.warmup = None
 cfg.runner.max_epochs = 3
@@ -89,6 +91,22 @@ model.CLASSES = datasets[0].CLASSES
 
 # Create work_dir
 mmcv.mkdir_or_exist(osp.abspath(cfg.work_dir))
+
+# TODO fix this:
+# Traceback (most recent call last):
+#   File "/mnt/azureml/cr/j/18d41a897d354acfb1dbd9e51c9303d6/exe/wd/train.py", line 92, in <module>
+#     train_detector(model, datasets, cfg, distributed=False, validate=True)
+#   File "/opt/conda/envs/ptca/lib/python3.10/site-packages/mmdet/apis/train.py", line 149, in train_detector
+#     data_loaders = [build_dataloader(ds, **train_loader_cfg) for ds in dataset]
+#   File "/opt/conda/envs/ptca/lib/python3.10/site-packages/mmdet/apis/train.py", line 149, in <listcomp>
+#     data_loaders = [build_dataloader(ds, **train_loader_cfg) for ds in dataset]
+#   File "/opt/conda/envs/ptca/lib/python3.10/site-packages/mmdet/datasets/builder.py", line 195, in build_dataloader
+#     data_loader = DataLoader(
+#   File "/opt/conda/envs/ptca/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 356, in __init__
+#     batch_sampler = BatchSampler(sampler, batch_size, drop_last)
+#   File "/opt/conda/envs/ptca/lib/python3.10/site-packages/torch/utils/data/sampler.py", line 267, in __init__
+#     raise ValueError(f"batch_size should be a positive integer value, but got batch_size={batch_size}")
+# ValueError: batch_size should be a positive integer value, but got batch_size=0
 train_detector(model, datasets, cfg, distributed=False, validate=True)
 
 print("Finished Training and now uploading to Azure Blob Storage")
