@@ -9,6 +9,8 @@ from mmdet.apis import train_detector
 import mmcv
 import os
 from azure.storage.blob import BlobServiceClient
+import uuid
+import json
 
 
 @ROTATED_DATASETS.register_module()
@@ -46,11 +48,12 @@ cfg.model.roi_head.bbox_head.num_classes = 1
 cfg.load_from = "oriented_rcnn_r50_fpn_1x_dota_le90-6d2b2ce0.pth"
 
 # Set up working dir to save files and logs.
-cfg.work_dir = "./outputs"
+unique_id = uuid.uuid4()
+cfg.work_dir = f"./outputs_{unique_id}"
 
 cfg.optimizer.lr = 0.001
 cfg.lr_config.warmup = None
-cfg.runner.max_epochs = 2
+cfg.runner.max_epochs = 3
 cfg.log_config.interval = 10
 
 # Change the evaluation metric since we use customized dataset.
@@ -63,7 +66,7 @@ cfg.checkpoint_config.interval = 3
 # Set seed thus the results are more reproducible
 cfg.seed = 0
 set_random_seed(0, deterministic=False)
-cfg.gpu_ids = range(1)
+cfg.gpu_ids = range(0)
 cfg.device = "cuda"
 
 # We can also use tensorboard to log the training process
@@ -106,10 +109,7 @@ def upload_to_azure_blob_storage(local_path, container_name, connection_string):
                 print(f"Uploaded {file_path} to {blob_path}")
 
 
-# import configs from json
-import json
-
-configs_json_path = "ssd_tiny_src/blob_configs.json"
+configs_json_path = "blob_configs.json"
 with open(configs_json_path) as f:
     blob_cfg = json.load(f)
 
