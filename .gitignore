@@ -1,3 +1,4 @@
 *.env
 *.pth
 ssd_tiny_src/blob_configs.json
+ssd_tiny_src/ssdd_tiny/
