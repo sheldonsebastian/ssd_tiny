@@ -23,3 +23,5 @@ RUN pip install future tensorboard
 RUN pip install azure-storage-blob
 
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
+
+COPY ssd_tiny_src ssd_tiny_src
