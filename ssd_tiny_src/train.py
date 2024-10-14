@@ -60,8 +60,8 @@ cfg.optimizer.lr = 0.001
 cfg.lr_config.warmup = None
 cfg.runner.max_epochs = 3
 cfg.log_config.interval = 10
-cfg.samples_per_gpu=1
-cfg.workers_per_gpu=1
+cfg.samples_per_gpu = 1
+cfg.workers_per_gpu = 0
 
 # Change the evaluation metric since we use customized dataset.
 cfg.evaluation.metric = "mAP"
@@ -73,7 +73,7 @@ cfg.checkpoint_config.interval = 3
 # Set seed thus the results are more reproducible
 cfg.seed = 0
 set_random_seed(0, deterministic=False)
-cfg.gpu_ids = range(0)
+cfg.gpu_ids = range(1)
 cfg.device = "cuda"
 
 # We can also use tensorboard to log the training process
