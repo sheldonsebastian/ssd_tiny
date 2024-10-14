@@ -11,6 +11,7 @@ import os
 from azure.storage.blob import BlobServiceClient
 import uuid
 import json
+import torch
 
 
 @ROTATED_DATASETS.register_module()
@@ -68,7 +69,7 @@ cfg.checkpoint_config.interval = 3
 # Set seed thus the results are more reproducible
 cfg.seed = 0
 set_random_seed(0, deterministic=False)
-cfg.gpu_ids = [0]
+cfg.gpu_ids = [torch.device("cuda")]
 cfg.device = "cuda"
 
 # We can also use tensorboard to log the training process
