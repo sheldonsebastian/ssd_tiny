@@ -1,4 +1,6 @@
-FROM mcr.microsoft.com/azureml/curated/acpt-pytorch-2.2-cuda12.1:18
+FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.1-cudnn8-ubuntu20.04:latest
+
+RUN pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 
 # Set environment variables
 ENV FORCE_CUDA="1"
