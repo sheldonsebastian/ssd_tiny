@@ -110,7 +110,8 @@ def upload_to_azure_blob_storage(local_path, container_name, connection_string):
     for root, dirs, files in os.walk(local_path):
         for file in files:
             file_path = os.path.join(root, file)
-            blob_path = os.path.relpath(file_path, local_path)
+            # Use the workdir as the root folder in the blob path
+            blob_path = os.path.relpath(file_path, os.path.dirname(local_path))
             blob_client = container_client.get_blob_client(blob_path)
 
             with open(file_path, "rb") as data:
