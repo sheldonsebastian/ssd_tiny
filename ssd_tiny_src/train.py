@@ -5,7 +5,7 @@ from mmdet.apis import set_random_seed
 import os.path as osp
 from mmdet.datasets import build_dataset
 from mmdet.models import build_detector
-from mmdet.apis import train_detector
+from mmdet.apis import train_detector, inference_detector, show_result_pyplot
 import mmcv
 import os
 from azure.storage.blob import BlobServiceClient
@@ -127,6 +127,17 @@ with open(configs_json_path) as f:
 connection_string = blob_cfg["CONNECTION_STR"]
 container_name = blob_cfg["CONTAINER_NAME"]
 local_output_path = cfg.work_dir
+
+img = mmcv.imread("ssdd_tiny/images/001129.png")
+model.cfg = cfg
+result = inference_detector(model, img)
+show_result_pyplot(
+    model,
+    img,
+    result,
+    score_thr=0.3,
+    out_file=os.path.join(local_output_path, "output.jpg"),
+)
 
 # Upload all files in the output directory to Azure Blob Storage
 upload_to_azure_blob_storage(local_output_path, container_name, connection_string)
