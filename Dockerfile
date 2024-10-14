@@ -1,6 +1,6 @@
-FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.1-cudnn8-ubuntu20.04:latest
+FROM mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.6-cudnn8-ubuntu20.04:latest
 
-RUN pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
 
 # Set environment variables
 ENV FORCE_CUDA="1"
@@ -17,3 +17,9 @@ RUN git clone https://github.com/open-mmlab/mmrotate.git /mmrotate
 WORKDIR /mmrotate
 RUN pip install -r requirements/build.txt
 RUN pip install --no-cache-dir -e .
+
+RUN pip install --force-reinstall -v "numpy==1.25.2"
+RUN pip install future tensorboard
+RUN pip install azure-storage-blob
+
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
