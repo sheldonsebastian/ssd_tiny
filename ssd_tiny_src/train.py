@@ -98,7 +98,7 @@ model.CLASSES = datasets[0].CLASSES
 mmcv.mkdir_or_exist(osp.abspath(cfg.work_dir))
 
 # Start training
-train_detector(model, datasets, cfg, distributed=False, validate=True)
+train_detector(model, datasets, cfg, distributed=False, validate=False)
 
 print("Finished Training and now uploading to Azure Blob Storage")
 
